@@ -22,6 +22,7 @@ register_deactivation_hook(__FILE__, 'deactivation_maep_plugin');
 function deactivation_maep_plugin() {
     wp_clear_scheduled_hook('update_plugin_product');
 }
+var_dump($ser);
 
 register_activation_hook(__FILE__, 'update_prod');
 ?>
