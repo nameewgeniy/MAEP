@@ -55,7 +55,7 @@
             {
                 throw new Exception( "Error cURL call" );
                 error_log($e->getMessage());
-                return false; 
+                return false;
             }
         }
 
