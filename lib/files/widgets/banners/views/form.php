@@ -1,4 +1,31 @@
 <?php
+    function view_test($ids, $name, $data)
+    {?>
+        <p>
+            <label for="<?php echo $ids['title']; ?>"><?php _e('Заголовок корзины:', 'cart'); ?></label>
+            <input id="<?php echo $ids['title']; ?>" name="<?php echo $name['title']; ?>" value="<?php echo $data['title']; ?>" style="width:100%;" />
+        </p>
+        <p>
+            <label for="<?php echo $ids['all']; ?>"><?php _e('Текст для продуктов:', 'cart'); ?></label>
+            <input id="<?php echo $ids['all']; ?>" name="<?php echo $name['title']; ?>" value="<?php echo $data['all']; ?>" style="width:100%;" />
+        </p>
+        <p>
+            <label for="<?php echo $ids['cost']; ?>"><?php _e('Текст для суммы:', 'cart'); ?></label>
+            <input id="<?php echo $ids['cost']; ?>" name="<?php echo $name['title']; ?>" value="<?php echo $data['cost']; ?>" style="width:100%;" />
+        </p>
+        <p>
+            <label for="<?php echo $ids['clear']; ?>"><?php _e('Текст очистить корзину:', 'cart'); ?></label>
+            <input id="<?php echo $ids['clear']; ?>" name="<?php echo $name['title']; ?>" value="<?php echo $data['clear']; ?>" style="width:100%;" />
+        </p>
+        <p>
+            <label for="<?php echo $ids['go_cart']; ?>"><?php _e('Текст ссылки на корзину:', 'cart'); ?></label>
+            <input id="<?php echo $ids['go_cart']; ?>" name="<?php echo $name['title']; ?>" value="<?php echo $data['go_cart']; ?>" style="width:100%;" />
+        </p>
+        <p>
+            <label for="<?php echo $ids['link_cart']; ?>"><?php _e('Ссылка  на корзину:', 'cart'); ?></label>
+            <input id="<?php echo $ids['link_cart']; ?>" name="<?php echo $name['title']; ?>" value="<?php echo $data['link_cart']; ?>" style="width:100%;" />
+        </p>
+    <?php }
     function viewForm($ids, $name, $data){?>
 
         <style>

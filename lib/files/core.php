@@ -199,7 +199,7 @@
         }
     }
 
-    function Banners($id_cat = 0, $keywords='', $width = 150, $height = 600, $scrolls = 'n' )
+    function Banners($id_comp, $id_cat, $keywords='', $width, $height, $scrolls, $sort, $topseller )
     {
         $trackingId = get_option('trackingId');
         $programId = getCompain();
@@ -218,7 +218,7 @@
             <script type="text/javascript" src='http://adn.ebay.com/files/js/min/jquery-1.6.2-min.js'></script>
             <script type="text/javascript" src='http://adn.ebay.com/files/js/min/ebay_activeContent-min.js'></script>
             <script charset="utf-8" type="text/javascript">
-                document.write('\x3Cscript type="text/javascript" charset="utf-8" src="http://adn.ebay.com/cb?programId=<?=$programId?>&campId=<?=$trackingId?>&toolId=10026<?=$keywords.$id_cat?>&width=<?=$width?>&height=<?=$height?>&font=1&textColor=000000&linkColor=0000AA&arrowColor=8BBC01&color1=709AEE&color2=[COLORTWO]&format=ImageLink&contentType=TEXT_AND_IMAGE&enableSearch=y&usePopularSearches=n&freeShipping=n&topRatedSeller=n&itemsWithPayPal=n&descriptionSearch=n&showKwCatLink=n&excludeCatId=&excludeKeyword=&disWithin=200&ctx=n&autoscroll=<?=$scrolls?>&flashEnabled=' + isFlashEnabled + '&pageTitle=' + _epn__pageTitle + '&cachebuster=' + (Math.floor(Math.random() * 10000000 )) + '">\x3C/script>' );
+                document.write('\x3Cscript type="text/javascript" charset="utf-8" src="http://adn.ebay.com/cb?programId=<?=$programId?>&campId=<?=$id_comp?>&toolId=10026<?=$keywords.$id_cat?>&sortBy=<?=$sort?>&width=<?=$width?>&height=<?=$height?>&font=1&textColor=000000&linkColor=0000AA&arrowColor=8BBC01&color1=709AEE&color2=[COLORTWO]&format=ImageLink&contentType=TEXT_AND_IMAGE&enableSearch=y&usePopularSearches=n&freeShipping=n&topRatedSeller=<?=$topseller?>&itemsWithPayPal=n&descriptionSearch=n&showKwCatLink=n&excludeCatId=&excludeKeyword=&disWithin=200&ctx=n&autoscroll=<?=$scrolls?>&flashEnabled=' + isFlashEnabled + '&pageTitle=' + _epn__pageTitle + '&cachebuster=' + (Math.floor(Math.random() * 10000000 )) + '">\x3C/script>' );
             </script>
         <?
 
