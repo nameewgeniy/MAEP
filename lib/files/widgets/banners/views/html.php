@@ -1,6 +1,6 @@
 <?php
 function viewHTML($data)
-{
-    return '<h1>Hello</h1>';
-}
+{?>
+    <h1>Hello</h1>
+<?php }
 ?>

@@ -1,5 +1,6 @@
 <?php
 include_once('views/html.php');
+include_once('views/form.php');
 class Banners_ebay extends WP_Widget {
 
     public function __construct() {
@@ -23,17 +24,24 @@ class Banners_ebay extends WP_Widget {
     }
     public function form( $instance )
     {
-    $defaults = array(
-    'title' => __('', 'Banner')
-    );
+        $defaults = array(
+        'title' => __('', 'Banner')
+        );
 
-    $instance = wp_parse_args( (array) $instance, $defaults ); ?>
-    <p>
-        <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Заголовок корзины:', 'cart'); ?></label>
-        <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
-    </p>
+        $instance = wp_parse_args( (array) $instance, $defaults );
+        $id_fieds = array(
+            'width' => $this->get_field_id( 'width' ),
+            'height' => $this->get_field_id( 'height' ),
+            'id_cat' => $this->get_field_id( 'id_cat' ),
+            'keyword' => $this->get_field_id( 'keyword' ),
+            'autoscroll' => $this->get_field_id( 'autoscroll' ),
+            'sort' => $this->get_field_id( 'sort' ),
+            'top_seller' => $this->get_field_id( 'top_seller' )
+        );
 
-    <? }
+        echo viewForm($id_fieds, $instance);
+
+    }
 }
 
 // добавление виджета
