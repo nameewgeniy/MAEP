@@ -260,4 +260,6 @@
     }
     add_action('init', 'delete_bad_product');
 
+
+
 ?>
