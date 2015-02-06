@@ -21,7 +21,7 @@ function new_post_type_news()
         'show_ui' => true,
         'has_archive' => true,
         'menu_icon' => 'dashicons-analytics',
-        'menu_position' => 6,
+        'menu_position' => 7,
         'supports' => array( 'title', 'editor', 'custom-fields','thumbnail'),
         'capability_type' => 'post'
     );

@@ -34,7 +34,7 @@
         }
 
         // cURL запрос на eBay
-        protected function CallToEbay($url)
+        public function CallToEbay($url)
         {
             try
             {

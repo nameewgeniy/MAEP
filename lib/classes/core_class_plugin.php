@@ -69,7 +69,7 @@
         }
 
         // Конвертируем XML в объект
-        private static function ConvertXMLtoObject($string_xml)
+        public static function ConvertXMLtoObject($string_xml)
         {
             try
             {
@@ -84,7 +84,7 @@
         }
 
         // Конвертируем JSON в объект
-        private static function ConvertJSONtoObject($string_json)
+        public static function ConvertJSONtoObject($string_json)
         {
             try
             {

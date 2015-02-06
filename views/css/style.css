@@ -7,7 +7,7 @@
 #load_stat {border-radius: 5px; background: #428BCA; height: 100%;}
 .name_main_cat {text-align: center; font-weight: bold; padding-bottom: 20px;}
 
-input.button.button-large {margin: 20px 0 !important;}
+input.button.button-large {}
 
 .search-custom { margin: 20px 0;}
 
@@ -73,6 +73,10 @@ font-size: 19px;}
 
 li.active {outline: none;}
 
+#action_plugin
+{
+    margin-top: 45px;
+}
 
 
 .loader,
