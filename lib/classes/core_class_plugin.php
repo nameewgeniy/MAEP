@@ -15,6 +15,12 @@
             return $this::ConvertXMLtoObject(parent::setCatID($id)->FindPopularSearches());
         }
 
+        // Ревью товаров по категории
+        public function GetReviews($id, $page)
+        {
+            return $this::ConvertXMLtoObject(parent::setCatID($id)->setNumberPage($page)->FindReviewsAndGuides());
+        }
+
         // 20 кратких описаний продуктов категории по ID
         public function ListItemsCategoryByID($id, $number)
         {

@@ -258,8 +258,45 @@
             var_dump(count($ret));
         }
     }
-    add_action('init', 'delete_bad_product');
+    //add_action('init', 'delete_bad_product');
 
+    /*
+     * Reviews
+     * */
+    function load_reviews($id=625, $page=2)
+    {
 
+        $rev = new MaepCore();
+        for($i = 1; $i < $page+1; $i++){
+            $xml = $rev->GetReviews($id, $page);
+            var_dump($xml);
+            //add_review($xml);
+        }
+        //$xml = $rev->GetReviews($id, $page);
+        //add_review($xml);
+    }
+    add_action('init', 'load_reviews');
 
+    function add_review($xml)
+    {
+        global $wpdb;
+        foreach($xml->BuyingGuideDetails->BuyingGuide as $one_news)
+        {
+            $html = file_get_html($one_news->URL);
+
+            foreach($html->find('div[class=guide-content]') as $ht)
+                $description = $ht;
+
+            $review = array(
+                'post_content' =>$description,
+                'post_status' => 'publish',
+                'post_title' => $one_news->Title,
+                'post_type' => 'reviews_ebay',
+                'post_author' => $user_ID
+            );
+            $check = $wpdb->query("SELECT post_title FROM {$wpdb->posts} WHERE `post_title` = '$one_news->Title' and `post_type` = 'reviews_ebay'");
+            if (!$check)
+                wp_insert_post( $review );
+        }
+    }
 ?>
