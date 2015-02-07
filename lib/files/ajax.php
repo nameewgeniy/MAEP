@@ -40,15 +40,15 @@ function list_cat_ids()
             if($category->LeafCategory == 'false' && $category->CategoryID != $id)
             {?>
                 <div class="main_list">
-                    <h3  class='cat_c'><a class='a_click glyphicon glyphicon-plus btn btn-primary' data-catid='<?php echo $category->CategoryID; ?>'></a><label><span class='category_name'><?php echo $category->CategoryName; ?></span>(<?php echo $category->CategoryID; ?>)</label></h3>
+                    <h3  class='cat_c'><a class='a_click glyphicon glyphicon-plus btn btn-primary' data-catid='<?php echo $category->CategoryID; ?>'></a><label><span class='category_name'><?php echo $category->CategoryName; ?></span>( <?php echo $category->CategoryID; ?> )</label></h3>
                     <div class="<?php echo $category->CategoryID; ?> all_cat"><div style="width: 200px;"><div class="loader loader-<?php echo $category->CategoryID; ?>">Loading...</div></div></div>
                 </div>
             <?}
             elseif($category->CategoryID != $id)
             {
-                echo "<h3 class='one_cat'><label><span class='category_name'>" . $category->CategoryName . "</span>(" . $category->CategoryID . ")</label></h3>";
-            }elseif($_REQUEST['flag'] == 'custom')
-                echo "<h3 class='one_cat'><label><span class='category_name'>" . $category->CategoryName . "</span>(" . $category->CategoryID . ")</label></h3>";
+                echo "<h3 class='one_cat'><label><span class='category_name'>" . $category->CategoryName . "</span>( " . $category->CategoryID . " )</label></h3>";
+            }/*elseif($_REQUEST['flag'] == 'custom')
+                echo "<h3 class='one_cat'><label><span class='category_name'>" . $category->CategoryName . "</span>(" . $category->CategoryID . ")</label></h3>";*/
         }
     else
         echo $result->Errors->LongMessage;

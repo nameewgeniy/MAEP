@@ -263,38 +263,45 @@
     /*
      * Reviews
      * */
-    function load_reviews($id=625, $page=2)
+    function load_reviews($id=625, $page=1)
     {
 
         $rev = new MaepCore();
-        for($i = 1; $i < $page+1; $i++){
-            $xml = $rev->GetReviews($id, $page);
-            var_dump($xml);
-            //add_review($xml);
-        }
-        //$xml = $rev->GetReviews($id, $page);
-        //add_review($xml);
-    }
-    add_action('init', 'load_reviews');
-
-    function add_review($xml)
-    {
-        global $wpdb;
+        $xml =  $rev->GetReviews($id, $page);
         foreach($xml->BuyingGuideDetails->BuyingGuide as $one_news)
         {
-            $html = file_get_html($one_news->URL);
+            $title = (string) $one_news->Title;
+            $urls[$title] = (string) $one_news->URL;
+        }
+        $urls = array_unique($urls);
+        add_review($urls);
+    }
+    //add_action('init', 'load_reviews');
+
+    function add_review($urls)
+    {
+        global $wpdb;
+        foreach($urls as $title => $url)
+        {
+            $html = file_get_html($url);
+
 
             foreach($html->find('div[class=guide-content]') as $ht)
-                $description = $ht;
+                $ht = (string)$ht;
+            unset($html);
+                //$description = $ht;
 
             $review = array(
-                'post_content' =>$description,
+                'post_content' => $ht,
                 'post_status' => 'publish',
-                'post_title' => $one_news->Title,
+                'post_title' => $title,
                 'post_type' => 'reviews_ebay',
                 'post_author' => $user_ID
             );
-            $check = $wpdb->query("SELECT post_title FROM {$wpdb->posts} WHERE `post_title` = '$one_news->Title' and `post_type` = 'reviews_ebay'");
+            unset($ht,$html);
+            wp_insert_post( $review );
+
+            $check = $wpdb->query("SELECT post_title FROM {$wpdb->posts} WHERE `post_title` = {$title} and `post_type` = 'reviews_ebay'");
             if (!$check)
                 wp_insert_post( $review );
         }

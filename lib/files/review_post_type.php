@@ -20,7 +20,7 @@ function new_post_type_reviews()
         'public' => true,
         'show_ui' => true,
         'has_archive' => true,
-        'menu_icon' => 'dashicons-analytics',
+        'menu_icon' => 'dashicons-visibility',
         'menu_position' => 7,
         'supports' => array( 'title', 'editor', 'custom-fields','thumbnail'),
         'capability_type' => 'post'

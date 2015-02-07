@@ -101,10 +101,8 @@ jQuery( function($){
 
     // поиск по категории для баннера
     $('#view_ids').on('click', function(){
-        cont.result.html(cont.load_html);
-        if ( $('#custom_id').val() != '')
-        {
-            $('#load_main').css('display','block');
+            $('#rev_ids').html('<div style=""><div class="loader " id="load_main">Loading...</div></div>');
+            $('#rev_ids #load_main').css('display','block');
             data = {
                 id : -1,
                 flag : 'custom',
@@ -112,12 +110,10 @@ jQuery( function($){
             }
             console.log(data);
             jQuery.post(ajaxurl, data, function(response) {
-                $('#cat_result').html(response);
+                $('#rev_ids').html(response);
             });
 
-        }
-        else
-            alert("Enter id category ");
+
     })
 
     // выбор подкатегории для баннера
