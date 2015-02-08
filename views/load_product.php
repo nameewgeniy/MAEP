@@ -84,7 +84,7 @@
                       <div class="input-group">
                           <input type="text" id="input-id-review" class="form-control search-product-input">
                                   <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" id="search_key">Check</button>
+                                    <button class="btn btn-default" type="button" id="check_count">Check</button>
                                   </span>
                       </div>
                       <h2>PerPage</h2>

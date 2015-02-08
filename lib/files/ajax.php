@@ -101,6 +101,7 @@ add_action('wp_ajax_list_cat_ids', 'list_cat_ids');
         for ($i=1; $i<$rep_page+1; $i++)
             $result[] = PublishProducts($id_cat, $name, $i, $keywords);
         echo json_encode($result);
+        sleep(3);
         exit;
     }
     add_action('wp_ajax_load_products', 'load_products');
@@ -173,5 +174,33 @@ add_action('wp_ajax_list_cat_ids', 'list_cat_ids');
         exit;
     }
     add_action('wp_ajax_list_pop','PopS');
+
+    function upload_reviews()
+    {
+        $id = trim($_REQUEST['id']);
+        $page = (int)$_REQUEST['perpage'];
+        if (isset($id))
+        {
+            load_reviews($id,$page);
+            $page++;
+            echo $page;
+            sleep(1);
+        }
+        else
+            echo "Error - ID is empty";
+        exit;
+    }
+    add_action('wp_ajax_upload_reviews', 'upload_reviews');
+
+    // проверяем количество гайдов
+    function check_review($id)
+    {
+        $id = trim($_REQUEST['id']);
+        $rev = new MaepCore();
+        $xml =  $rev->GetReviews($id, 1);
+        echo $xml->BuyingGuideCount;
+        exit;
+    }
+    add_action('wp_ajax_check_review', 'check_review');
 
 ?>

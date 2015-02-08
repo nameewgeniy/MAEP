@@ -263,7 +263,7 @@
     /*
      * Reviews
      * */
-    function load_reviews($id=625, $page=1)
+    function load_reviews($id, $page=1)
     {
 
         $rev = new MaepCore();
@@ -298,12 +298,15 @@
                 'post_type' => 'reviews_ebay',
                 'post_author' => $user_ID
             );
-            unset($ht,$html);
-            wp_insert_post( $review );
+            unset($ht);
+            $result = wp_insert_post( $review );
 
-            $check = $wpdb->query("SELECT post_title FROM {$wpdb->posts} WHERE `post_title` = {$title} and `post_type` = 'reviews_ebay'");
-            if (!$check)
-                wp_insert_post( $review );
+            /*$check = $wpdb->query("SELECT post_title FROM {$wpdb->posts} WHERE `post_title` = {$title} and `post_type` = 'reviews_ebay'");*/
+            /*if (!$check)
+               $result = wp_insert_post( $review );
+            else
+                $result = 'Review is exists';*/
+
         }
     }
 ?>

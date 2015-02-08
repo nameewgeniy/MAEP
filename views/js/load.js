@@ -116,6 +116,16 @@ jQuery( function($){
 
     })
 
+    // загрузка гайдов
+    $('#load_review').on('click', function(){
+        var page = $('#check_review').val();
+        var id = $('#input-id-review').val();
+        load_review(id,1,page);
+
+    });
+
+
+
     // выбор подкатегории для баннера
     $('.settings-banner').on('click', '.a_click', function(){
         var ID = $(this).data('catid');
@@ -178,6 +188,46 @@ jQuery( function($){
         $('.bar_message').html(message);
 
     }
+
+     // загрузка ревью
+    function load_review(id, step, page)
+    {
+        data = {
+            id : id,
+            action : 'upload_reviews',
+            perpage : step
+        }
+        console.log(data);
+        InsertBar('#rev_ids', 0, 'Wait...');
+        jQuery.post(ajaxurl, data).done( function(response) {
+            console.log(response);
+            if (response <= page){
+                load_review(id,step, page);
+                StatusBar('#rev_ids',100/step,'Step - '+step);
+            }
+            else
+                StatusBar('#rev_ids',100,'done');
+
+        }).fail(function(){
+            StatusBar('#rev_ids',100,'fail...');
+        });
+    }
+
+    // проверка количества гайдов
+    $('#check_count').on('click', function(){
+        var id = $('#input-id-review').val();
+        data = {
+            id : id,
+            action : 'check_review'
+        };
+        console.log(data);
+        jQuery.post(ajaxurl, data).done( function(response) {
+            alert('Count Guide '+response);
+        }).fail(function(){
+            alert('fail');
+        });
+    });
+
 
     // Рекурсивный аякс запрос на сервер
     function recurs_ajax(ids, step, action, wrap, count, custom_par, per_page, keywords)
