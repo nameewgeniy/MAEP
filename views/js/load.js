@@ -202,8 +202,8 @@ jQuery( function($){
         jQuery.post(ajaxurl, data).done( function(response) {
             console.log(response);
             if (response <= page){
-                load_review(id,step, page);
-                StatusBar('#rev_ids',100/step,'Step - '+step);
+                load_review(id,response, page);
+                StatusBar('#rev_ids',100/response,'Step - '+response);
             }
             else
                 StatusBar('#rev_ids',100,'done');

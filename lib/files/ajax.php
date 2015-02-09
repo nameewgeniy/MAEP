@@ -178,7 +178,7 @@ add_action('wp_ajax_list_cat_ids', 'list_cat_ids');
     function upload_reviews()
     {
         $id = trim($_REQUEST['id']);
-        $page = (int)$_REQUEST['perpage'];
+        $page = $_REQUEST['perpage'];
         if (isset($id))
         {
             load_reviews($id,$page);

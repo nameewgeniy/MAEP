@@ -283,29 +283,30 @@
         global $wpdb;
         foreach($urls as $title => $url)
         {
-            $html = file_get_html($url);
+            $check = $wpdb->query("SELECT post_title FROM {$wpdb->posts} WHERE `post_title` = '{$title}'");
 
+            if (!$check)
+            {
+               $html = file_get_html($url);
 
-            foreach($html->find('div[class=guide-content]') as $ht)
-                $ht = (string)$ht;
-            unset($html);
+                foreach($html->find('div[class=guide-content]') as $ht)
+                    $ht = (string)$ht;
+                unset($html);
                 //$description = $ht;
 
-            $review = array(
-                'post_content' => $ht,
-                'post_status' => 'publish',
-                'post_title' => $title,
-                'post_type' => 'reviews_ebay',
-                'post_author' => $user_ID
-            );
-            unset($ht);
-            $result = wp_insert_post( $review );
+                $review = array(
+                    'post_content' => $ht,
+                    'post_status' => 'publish',
+                    'post_title' => $title,
+                    'post_type' => 'reviews_ebay',
+                    'post_author' => $user_ID
+                );
+                unset($ht);
 
-            /*$check = $wpdb->query("SELECT post_title FROM {$wpdb->posts} WHERE `post_title` = {$title} and `post_type` = 'reviews_ebay'");*/
-            /*if (!$check)
-               $result = wp_insert_post( $review );
+                $result = wp_insert_post( $review );
+            }
             else
-                $result = 'Review is exists';*/
+                $result = 'Review is exists';
 
         }
     }
