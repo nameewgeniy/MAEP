@@ -180,10 +180,11 @@
                               {
                                   // удаляем товар
                                   $id_post = array_search($info_product->ItemID,$product);
-                                  if(wp_delete_post( $id_post, false ))
-                                      $mes['delete post']++;
-                                  $mes['delet info'] = $wpdb->query("DELETE FROM {$table} WHERE id_product = {$info_product->ItemID}");
 
+                                  /*if(wp_delete_post( $id_post, false ))
+                                      $mes['delete post']++;
+                                  $mes['delet info'] = $wpdb->query("DELETE FROM {$table} WHERE id_product = {$info_product->ItemID}");*/
+                                  
                                   // догружаем продукты из категори, откуда удалили товар (20 штук)
                                   $name_cat = array_pop(explode(':',$info_product->PrimaryCategoryName));
                                   $id_cat = (string)$info_product->PrimaryCategoryID;
