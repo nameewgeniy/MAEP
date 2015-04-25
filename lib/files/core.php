@@ -58,7 +58,7 @@
             {
                 // вставка поста
                 $product = array(
-                    'post_content' =>MaepCore::ReplaceURL($item->Description,$item->ViewItemURLForNaturalSearch),
+                    'post_content' =>/*MaepCore::ReplaceURL(*/$item->Description/*,$item->ViewItemURLForNaturalSearch)*/,
                     'post_status' => 'publish',
                     'post_title' => $item->Title,
                     'post_type' => 'maep_products',
