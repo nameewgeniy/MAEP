@@ -15,6 +15,12 @@
             return $this::ConvertXMLtoObject(parent::setCatID($id)->FindPopularSearches());
         }
 
+        // Ревью товаров по категории
+        public function GetReviews($id, $page)
+        {
+            return $this::ConvertXMLtoObject(parent::setCatID($id)->setNumberPage($page)->FindReviewsAndGuides());
+        }
+
         // 20 кратких описаний продуктов категории по ID
         public function ListItemsCategoryByID($id, $number)
         {
@@ -69,7 +75,7 @@
         }
 
         // Конвертируем XML в объект
-        private static function ConvertXMLtoObject($string_xml)
+        public static function ConvertXMLtoObject($string_xml)
         {
             try
             {
@@ -84,7 +90,7 @@
         }
 
         // Конвертируем JSON в объект
-        private static function ConvertJSONtoObject($string_json)
+        public static function ConvertJSONtoObject($string_json)
         {
             try
             {
@@ -131,22 +137,26 @@
             return $content;
         }
 
-        public static function update_track_id($links, $old_id, $new_id)
+        public static function update_track_id($old_id, $new_id)
         {
-            global $wpdb;
+            global $wpdb; 
             $table = $wpdb->prefix . "maep_products_info";
+            return $result = $wpdb->query("UPDATE {$table} SET `link` = REPLACE(`link`,'{$old_id}','{$new_id}') WHERE `link` LIKE '%{$old_id}%' ");
+             /*$limit = $step*100;
+            $limit_from = $limit - 100;
+            $links = $wpdb->get_results("SELECT link,id FROM {$table} LIMIT {$limit_from},{$limit}");
             if (is_array($links))
             {
                 foreach ($links as $link) {
                     $n_link = str_replace($old_id, $new_id, $link->link);
                     $new_link .= ",('" . $link->id . "','". $n_link . "')";
                 }
-                $new_link = substr_replace($new_link, '', 0, 1);
-                if($result = $wpdb->query("INSERT INTO {$table} (`id`,`link`) VALUES {$new_link} ON DUPLICATE KEY UPDATE `link` = VALUES(`link`)"))
+                $new_link = substr_replace($new_link, '', 0, 1);*/
+                /*if($result = $wpdb->query("INSERT INTO {$table} (`id`,`link`) VALUES {$new_link} ON DUPLICATE KEY UPDATE `link` = VALUES(`link`) LIMIT {$limit_from},{$limit}"))
                     return true;
                 else
-                    return false;
-            }
+                    return false;*/
+            //}
         }
 
         public static function ReplaceURL($html, $url)

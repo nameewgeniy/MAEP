@@ -101,10 +101,8 @@ jQuery( function($){
 
     // поиск по категории для баннера
     $('#view_ids').on('click', function(){
-        cont.result.html(cont.load_html);
-        if ( $('#custom_id').val() != '')
-        {
-            $('#load_main').css('display','block');
+            $('#rev_ids').html('<div style=""><div class="loader " id="load_main">Loading...</div></div>');
+            $('#rev_ids #load_main').css('display','block');
             data = {
                 id : -1,
                 flag : 'custom',
@@ -112,13 +110,21 @@ jQuery( function($){
             }
             console.log(data);
             jQuery.post(ajaxurl, data, function(response) {
-                $('#cat_result').html(response);
+                $('#rev_ids').html(response);
             });
 
-        }
-        else
-            alert("Enter id category ");
+
     })
+
+    // загрузка гайдов
+    $('#load_review').on('click', function(){
+        var page = $('#check_review').val();
+        var id = $('#input-id-review').val();
+        load_review(id,1,page);
+
+    });
+
+
 
     // выбор подкатегории для баннера
     $('.settings-banner').on('click', '.a_click', function(){
@@ -182,6 +188,46 @@ jQuery( function($){
         $('.bar_message').html(message);
 
     }
+
+     // загрузка ревью
+    function load_review(id, step, page)
+    {
+        data = {
+            id : id,
+            action : 'upload_reviews',
+            perpage : step
+        }
+        console.log(data);
+        InsertBar('#rev_ids', 0, 'Wait...');
+        jQuery.post(ajaxurl, data).done( function(response) {
+            console.log(response);
+            if (response <= page){
+                load_review(id,response, page);
+                StatusBar('#rev_ids',100/response,'Step - '+response);
+            }
+            else
+                StatusBar('#rev_ids',100,'done');
+
+        }).fail(function(){
+            StatusBar('#rev_ids',100,'fail...');
+        });
+    }
+
+    // проверка количества гайдов
+    $('#check_count').on('click', function(){
+        var id = $('#input-id-review').val();
+        data = {
+            id : id,
+            action : 'check_review'
+        };
+        console.log(data);
+        jQuery.post(ajaxurl, data).done( function(response) {
+            alert('Count Guide '+response);
+        }).fail(function(){
+            alert('fail');
+        });
+    });
+
 
     // Рекурсивный аякс запрос на сервер
     function recurs_ajax(ids, step, action, wrap, count, custom_par, per_page, keywords)

@@ -34,7 +34,7 @@
         }
 
         // cURL запрос на eBay
-        protected function CallToEbay($url)
+        public function CallToEbay($url)
         {
             try
             {
@@ -55,7 +55,7 @@
             {
                 throw new Exception( "Error cURL call" );
                 error_log($e->getMessage());
-                return false; 
+                return false;
             }
         }
 
@@ -134,6 +134,7 @@
             $url .= "&paginationInput.entriesPerPage=20";
             $url .= "&paginationInput.pageNumber=" . $this->_page;
 
+
             return $this->CallToEbay($url);
         }
 
@@ -211,6 +212,21 @@
             $url .= "&responseencoding=" . $this->_typeRESP;
             $url .= "&appid=" . $this->_appID;
             $url .= "&siteid=" . $this->_siteID;
+            $url .= "&version=531";
+            $url .= "&CategoryID=" . $this->_catID;
+
+            return $this->CallToEbay($url);
+        }
+
+        // Поиск популярных запросов
+        protected function FindReviewsAndGuides()
+        {
+            $url  = "http://open.api.ebay.com/shopping?";
+            $url .= "callname=FindReviewsAndGuides";
+            $url .= "&responseencoding=" . $this->_typeRESP;
+            $url .= "&appid=" . $this->_appID;
+            $url .= "&siteid=" . $this->_siteID;
+            $url .= "&PageNumber=" . $this->_page;
             $url .= "&version=531";
             $url .= "&CategoryID=" . $this->_catID;
 

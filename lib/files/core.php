@@ -58,7 +58,7 @@
             {
                 // вставка поста
                 $product = array(
-                    'post_content' =>MaepCore::ReplaceURL($item->Description,$item->ViewItemURLForNaturalSearch),
+                    'post_content' =>/*MaepCore::ReplaceURL(*/$item->Description/*,$item->ViewItemURLForNaturalSearch)*/,
                     'post_status' => 'publish',
                     'post_title' => $item->Title,
                     'post_type' => 'maep_products',
@@ -200,7 +200,7 @@
         }
     }
 
-    function Banners($id_cat = 0, $keywords='', $width = 150, $height = 600, $scrolls = 'n' )
+    function Banners($id_comp, $id_cat, $keywords='', $width, $height, $scrolls, $sort, $topseller )
     {
         $trackingId = get_option('trackingId');
         $programId = getCompain();
@@ -219,7 +219,7 @@
             <script type="text/javascript" src='http://adn.ebay.com/files/js/min/jquery-1.6.2-min.js'></script>
             <script type="text/javascript" src='http://adn.ebay.com/files/js/min/ebay_activeContent-min.js'></script>
             <script charset="utf-8" type="text/javascript">
-                document.write('\x3Cscript type="text/javascript" charset="utf-8" src="http://adn.ebay.com/cb?programId=<?=$programId?>&campId=<?=$trackingId?>&toolId=10026<?=$keywords.$id_cat?>&width=<?=$width?>&height=<?=$height?>&font=1&textColor=000000&linkColor=0000AA&arrowColor=8BBC01&color1=709AEE&color2=[COLORTWO]&format=ImageLink&contentType=TEXT_AND_IMAGE&enableSearch=y&usePopularSearches=n&freeShipping=n&topRatedSeller=n&itemsWithPayPal=n&descriptionSearch=n&showKwCatLink=n&excludeCatId=&excludeKeyword=&disWithin=200&ctx=n&autoscroll=<?=$scrolls?>&flashEnabled=' + isFlashEnabled + '&pageTitle=' + _epn__pageTitle + '&cachebuster=' + (Math.floor(Math.random() * 10000000 )) + '">\x3C/script>' );
+                document.write('\x3Cscript type="text/javascript" charset="utf-8" src="http://adn.ebay.com/cb?programId=<?=$programId?>&campId=<?=$id_comp?>&toolId=10026<?=$keywords.$id_cat?>&sortBy=<?=$sort?>&width=<?=$width?>&height=<?=$height?>&font=1&textColor=000000&linkColor=0000AA&arrowColor=8BBC01&color1=709AEE&color2=[COLORTWO]&format=ImageLink&contentType=TEXT_AND_IMAGE&enableSearch=y&usePopularSearches=n&freeShipping=n&topRatedSeller=<?=$topseller?>&itemsWithPayPal=n&descriptionSearch=n&showKwCatLink=n&excludeCatId=&excludeKeyword=&disWithin=200&ctx=n&autoscroll=<?=$scrolls?>&flashEnabled=' + isFlashEnabled + '&pageTitle=' + _epn__pageTitle + '&cachebuster=' + (Math.floor(Math.random() * 10000000 )) + '">\x3C/script>' );
             </script>
         <?
 
@@ -259,6 +259,56 @@
             var_dump(count($ret));
         }
     }
-    add_action('init', 'delete_bad_product');
+    //add_action('init', 'delete_bad_product');
 
+    /*
+     * Reviews
+     * */
+    function load_reviews($id, $page=1)
+    {
+
+        $rev = new MaepCore();
+        $xml =  $rev->GetReviews($id, $page);
+        foreach($xml->BuyingGuideDetails->BuyingGuide as $one_news)
+        {
+            $title = (string) $one_news->Title;
+            $urls[$title] = (string) $one_news->URL;
+        }
+        $urls = array_unique($urls);
+        add_review($urls);
+    }
+    //add_action('init', 'load_reviews');
+
+    function add_review($urls)
+    {
+        global $wpdb;
+        foreach($urls as $title => $url)
+        {
+            $check = $wpdb->query("SELECT post_title FROM {$wpdb->posts} WHERE `post_title` = '{$title}'");
+
+            if (!$check)
+            {
+               $html = file_get_html($url);
+
+                foreach($html->find('div[class=guide-content]') as $ht)
+                    $ht = (string)$ht;
+                unset($html);
+                //$description = $ht;
+
+                $review = array(
+                    'post_content' => $ht,
+                    'post_status' => 'publish',
+                    'post_title' => $title,
+                    'post_type' => 'reviews_ebay',
+                    'post_author' => $user_ID
+                );
+                unset($ht);
+
+                $result = wp_insert_post( $review );
+            }
+            else
+                $result = 'Review is exists';
+
+        }
+    }
 ?>

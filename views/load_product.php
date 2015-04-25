@@ -7,6 +7,7 @@
 			<ul class="nav nav-tabs" role="tablist" id="products_main">
 			  <li class="active"><a href="#home" role="tab" data-toggle="tab" style="font-size: 20px;">Load Categories</a></li>
 			  <li><a href="#one_product" role="tab" data-toggle="tab" style="font-size: 20px;">Load Product</a></li>
+			  <li><a href="#review" role="tab" data-toggle="tab" style="font-size: 20px;">Load Reviews And Guides</a></li>
 			</ul>
 			<!-- Tab panes -->
 			<div class="tab-content">
@@ -77,6 +78,28 @@
 			    	</div>
 					  	
 			  </div>
+              <div class="tab-pane" id="review">
+                  <div class="search-product">
+                      <h2>Enter category ID</h2>
+                      <div class="input-group">
+                          <input type="text" id="input-id-review" class="form-control search-product-input">
+                                  <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" id="check_count">Check</button>
+                                  </span>
+                      </div>
+                      <h2>PerPage</h2>
+                      <input type="number" value="1" class="count-search" id="check_review"/>
+                      <div >
+                          <input name="publish" id="load_review" value="Load review" class="btn btn-primary" type="button">
+                      </div>
+                  </div>
+                  <div class="settings-banner" >
+                      <h3><a id="view_ids">View id categories</a></h3>
+                      <div id="rev_ids"></div>
+                  </div>
+
+
+              </div>
 			</div>
 	<?
 	

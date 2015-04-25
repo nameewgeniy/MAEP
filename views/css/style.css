@@ -7,7 +7,7 @@
 #load_stat {border-radius: 5px; background: #428BCA; height: 100%;}
 .name_main_cat {text-align: center; font-weight: bold; padding-bottom: 20px;}
 
-input.button.button-large {margin: 20px 0 !important;}
+input.button.button-large {}
 
 .search-custom { margin: 20px 0;}
 
@@ -33,8 +33,9 @@ input.button.button-large {margin: 20px 0 !important;}
 
 .cat_select, .search-product {width: 40%;  float: left;}
 
-.info_load {width: 59%; border-left: 1px solid #ddd; float: right; min-height: 200px;}
+.info_load, .settings-banner {width: 59%; border-left: 1px solid #ddd; float: right; min-height: 200px;}
 
+.settings-banner {padding-left: 40px !important;}
 .general-settings {margin: 20px 20px 20px 0; padding: 20px;}
 
 .token {width: 100%; min-height: 200px; padding-bottom: 20px;}
@@ -73,6 +74,10 @@ font-size: 19px;}
 
 li.active {outline: none;}
 
+#action_plugin
+{
+    margin-top: 45px;
+}
 
 
 .loader,

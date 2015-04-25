@@ -44,12 +44,12 @@ function maep_banners()
 
                <?php
 
-               Banners(get_option('b_id_cat'), get_option('b_key'), get_option('b_width'), get_option('b_height'), get_option('scroll') );
+               //Banners(get_option('b_id_cat'), get_option('b_key'), get_option('b_width'), get_option('b_height'), get_option('scroll') );
                ?>
 
             </div>
         </div>
         <h3>Code banner</h3>
-        <textarea  id="code_banner"><?php  Banners(get_option('b_id_cat'), get_option('b_key'), get_option('b_width'), get_option('b_height'), get_option('scroll') );  ?></textarea>
+
     </div>
 <?}

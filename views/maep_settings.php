@@ -1,4 +1,4 @@
-<?php 
+<?php
 	function maep_settings()
 	{
 		$option = new MaepCore();
@@ -15,12 +15,14 @@
 					'auto_update_product' => 'check',
 					'token' => 'AgAAAA**AQAAAA**aAAAAA**DuIfVA**nY+sHZ2PrBmdj6wVnY+sEZ2PrA2dj6AGmIOmDJOKogidj6x9nY+seQ**8nsCAA**AAMAAA**VnKIClAiKxUqDea8iJL4xNbLudCIHB21oJcIWi+qZ7Dq3r9CWx5dVMGImL0WGS3Kt7uXJIfji0+Eo69CPXTZoCNy4psp50nsWGiTvh9RBsdlIcHbynhyClPrjoB7FMukLhbDTmUHbzYVuyXK6boBZi++UG6iufszIsq4Cer3yGUehth2pR1s9nW+REJZvos5TVAWDqCPF42q9mc6EibjscdBkaksFngzaNNsEBv8V6/LRW9SsbYAPdugK9nAYIDueeoqDrWvxm0iL3gZ2eKiIEm6wjuKum6aDbomuK+I7tVzqT+6PzvddcPGW0QLlJuMuPLGToWQczVN5KSuMkVrq+RYQ76ophEJcVyXFwnD/ZZqrCZ9nfCd8fsZB+EoSu3JMLXaORNr+6wDBfPWKQRv0ST3KpOV/uZUq3NJzAwfBpxA00rsArTK0EadcIAyhDHnkAFgBQYeLOXH/LmbDtduAVnf4e3Ieea/rRBHLz/9WIPVcLCkjG7Mr4JV9wRLkJXlzTiRgtHs+NgvRK26eLcBVQdUCv7bbXWDHaToeNAWIPe5CLGA32OjhLZc4npM4P4fvxfHck3SiRB3CQNUyYY9+Jr+MlFwPRG7dT+J+HsMnwa978569sxS0hdh+sJDtuHK/k9BNhJflwrQ5rucs/mvdLYGzVWn5h/agG9KC1ebBMctyQG48PfFRO6zOiLBAqAaw3e6lvvyZltRmmpQyZrsUccyEOKulxqv1cr3T59rC54bEXDmgGIYbg5kBc07gF4f',
 				));
-		if ($_POST['save_options'])
+        // сохранение настроек
+		if (@$_POST['save_options'])
 		{
-			$links = $wpdb->get_results("SELECT link,id FROM {$table_info}");
-			if ($links && $_POST['trackingId'] != get_option('trackingId') && get_option('trackingId') != '' && $_POST['trackingId'] != '')
+			$links = $wpdb->get_results("SELECT id FROM {$table_info}");
+			if (count($links) > 0 && $_POST['trackingId'] != get_option('trackingId') && get_option('trackingId') != '' && $_POST['trackingId'] != '')
 			{
-				$result_up_tr = $option::update_track_id($links, get_option('trackingId'), $_POST['trackingId']);
+					$result_up_tr = $option::update_track_id(get_option('trackingId'), $_POST['trackingId']);
+				
 			}
 			$option->SetOption(array(
 					'appID' => trim($_POST['appID']),
@@ -35,6 +37,12 @@
 				));
 			
 		}
+
+        // Загрузка новостей
+        if (@$_POST['news'])
+        {
+            load_news();
+        }
 			
 		$AppID = get_option('appID');
 		//$count = get_option('count');
@@ -46,14 +54,17 @@
 		?>
 		<div class="panel panel-default general-settings">
             <?php
-                if ($_POST['save_options'])
+                if (@$_POST['news'])
+                    echo '<div class="alert alert-success" role="alert">All news has been uploaded sucessfully</div>';
+                if (@$_POST['save_options'])
                     echo '<div class="alert alert-success" role="alert">Settings save</div>';
                 if ($DEVID == '' || $trackingId == '' || $token == '' || $CertID == '' || $AppID == '')
                     echo '<div class="alert alert-warning" role="alert">All fields must be filled</div>';
                 if ($result_up_tr)
-                    echo '<div class="alert alert-success" role="alert">Tracking Id has been updated</div>';
-                elseif(!$result_up_tr && isset($result_up_tr))
-                    echo '<div class="alert alert-danger" role="alert">Tracking Id not has been updated</div>';
+                    echo '<div class="alert alert-success" role="alert">Tracking Id has been update: ' . $result_up_tr . ' - links</div>';
+                elseif(isset($result_up_tr) && !$result_up_tr)
+                    echo '<div class="alert alert-danger" role="alert">Tracking Id not has been updated</div>' ;
+                var_dump($result_up_tr);
             ?>
 
 			<div class="panel-heading"><h3 class="panel-title">General Settings</h3></div>
@@ -115,7 +126,9 @@
 				      </div>
 				    </div>
 				  </div>
-				</div>	
+				</div>
+                <label><input type="submit" value="Save settings" name="save_options" class="button button-primary button-large"/></label>
+            </form>
 				<div class="panel-group" id="action_plugin">
 				  <div class="panel panel-default">
 				    <div class="panel-heading">
@@ -127,15 +140,19 @@
 				    </div>
 				    <div id="collapseAction" class="panel-collapse collapse">
 				      <div class="panel-body">
-						<input class="button button-primary button-large" type="button" value="Delete Products" id="delete_all_product" />
+                        <form action="" method="POST">
+                            <h3>Upload news from eBay</h3>
+                            <input class="button button-primary button-large" name="news"  type="submit" value="Upload news" id="load_news"  />
+                            <h3>Delete <b>all</b> products</h3>
+                            <input class="button button-primary button-large" type="button" value="Delete Products" id="delete_all_product" style="background: #F04438; color: #fff" />
+                        </form>
 						<div id="update-products" ></div>
 						<div id="delete-products" ></div>
 				      </div>
 				    </div>
 				  </div>
 				</div>
-                <label><input type="submit" value="Save settings" name="save_options" class="button button-primary button-large"/></label>
-			</form>
+
 		</div>
 
 		
