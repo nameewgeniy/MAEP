@@ -64,7 +64,6 @@
                     echo '<div class="alert alert-success" role="alert">Tracking Id has been update: ' . $result_up_tr . ' - links</div>';
                 elseif(isset($result_up_tr) && !$result_up_tr)
                     echo '<div class="alert alert-danger" role="alert">Tracking Id not has been updated</div>' ;
-                var_dump($result_up_tr);
             ?>
 
 			<div class="panel-heading"><h3 class="panel-title">General Settings</h3></div>
